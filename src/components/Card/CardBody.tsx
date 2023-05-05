@@ -1,54 +1,63 @@
 //Card presentation logic
-import { useState } from 'react'
+import useSWR from 'swr'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 
 import CardData from "@/components/Card/CardData"
 
-const result = {
-  "base": "USD",
-  "date": "2021-03-17",
-  "rates": {
-    "EUR": 0.813399,
-    "GBP": 0.72007,
-    "JPY": 107.346001
-  },
-  "success": true,
-  "timestamp": 1519296206
-} 
+const fetcher = (url: string) => axios.get(url, {headers:{'apikey':process.env.NEXT_PUBLIC_EXCHANGE_API_KEY}}).then(res => res.data)
 
 export default function CardBody() {
+  const { data, isLoading, error, mutate } = useSWR("https://api.apilayer.com/exchangerates_data/latest?&base=USD", fetcher, {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  })
   const [inputVal, setInputVal] = useState('1')
-  const [to, setTo] = useState(Object.keys(result.rates)[0])
-  const [from, setFrom] = useState(Object.keys(result.rates)[1])
+  const [to, setTo] = useState('')
+  const [from, setFrom] = useState('')
   const [rate, setRate] = useState({val: 0, currency: ''})
   const [show, setShow] = useState(false)
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if((data.timestamp * 1000) + (10 * 60 * 1000) <= new Date().getTime()) {
+      mutate()
+    }
+    setRate({val: Math.round(inputVal * data.rates[to] / data.rates[from] * 100) / 100, currency: to})
     setShow(true)
-    setRate({val: 0, currency: to})
-    console.log('submit')
     e.preventDefault()
+  }
+  useEffect(() => {
+    if(data) {
+      setTo(Object.keys(data.rates)[0])
+      setFrom(Object.keys(data.rates)[1])
+    }
+  },[data])
+
+  if(error) {
+    alert("Error retrieving data", error.message)
   }
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
     if(/^\d*$/.test(e.currentTarget.value)) {
       setInputVal(e.currentTarget.value)
       setShow(false)
-      console.log('submit number')
     }
   }
+
   function handleTo(e: React.ChangeEvent<HTMLSelectElement>) {
     setShow(false)
     setTo(e.currentTarget.value)
-    console.log('to', e.currentTarget.value)
   }
   
   function handleFrom(e: React.ChangeEvent<HTMLSelectElement>) {
     setShow(false)
     setFrom(e.currentTarget.value)
-    console.log('from', e.currentTarget.value)
   }
 
   return (<CardData 
+    loading={isLoading}
     show={show} 
     inputVal={inputVal} 
     to={to} 
@@ -58,7 +67,7 @@ export default function CardBody() {
     handleTo={handleTo} 
     handleFrom={handleFrom} 
     rate={rate} 
-    symbols={Object.keys(result.rates)} 
-    date={result.date}
+    symbols={Object.keys(data?.rates || {})} 
+    date={data?.date}
   />)
 }
