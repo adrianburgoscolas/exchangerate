@@ -10,6 +10,7 @@ This is a solution to the [Fonoma - Frontend Developer Test](https://fonoma.noti
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
+- [Testing](#testing)
 - [Author](#author)
 
 
