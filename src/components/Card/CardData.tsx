@@ -13,7 +13,9 @@ export default function CardData(props: CardData) {
         <p className="text-neutral-300 text-xs">{props.date}</p>
       </div>
       {props.loading?
-        <CircularProgress />:
+        <div className='text-center w-full mx-auto'>
+          <CircularProgress />
+        </div>:
         <form role='form' onSubmit={props.handleSubmit} className='flex gap-2 justify-around items-center w-full bg-neutral-300 p-2 rounded-md mx-auto text-neutral-600'>
           <input role='input' onChange={props.handleInput} value={props.inputVal} required type='text' className='text-sm border border-neutral-400 bg-neutral-300 rounded-md p-1 w-20 text-center focus:outline-none'/>
           <select role='select' onChange={props.handleFrom} value={props.from} className="border border-neutral-400 bg-neutral-300 rounded-md p-1 w-16">
