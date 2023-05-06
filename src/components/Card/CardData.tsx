@@ -1,6 +1,8 @@
 import React from "react"
 import CircularProgress from '@mui/joy/CircularProgress';
 
+import CardData from '@/utils/Definitions'
+
 //Card rendering logic
 export default function CardData(props: CardData) {
 
