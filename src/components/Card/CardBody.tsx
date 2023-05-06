@@ -24,7 +24,7 @@ export default function CardBody() {
     if((data.timestamp * 1000) + (10 * 60 * 1000) <= new Date().getTime()) {
       mutate()
     }
-    setRate({val: Math.round(inputVal * data.rates[to] / data.rates[from] * 100) / 100, currency: to})
+    setRate({val: Math.round(Number(inputVal) * data.rates[to] / data.rates[from] * 100) / 100, currency: to})
     setShow(true)
     e.preventDefault()
   }
@@ -36,7 +36,7 @@ export default function CardBody() {
   },[data])
 
   if(error) {
-    alert("Error retrieving data", error.message)
+    alert(`Error retrieving data, ${error.message}`)
   }
 
   function handleInput(e: React.ChangeEvent<HTMLInputElement>) {

@@ -15,7 +15,7 @@ import {ChangeEventHandler} from "react"
   "from": string,
   "to": string,
   "symbols": string[],
-  "inputVal": string
+  "inputVal": string,
 }
 
 export default Cardata
