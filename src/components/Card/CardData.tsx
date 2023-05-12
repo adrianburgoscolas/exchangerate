@@ -9,7 +9,7 @@ export default function CardData(props: CardData) {
   return (
     <div className="w-fit mx-auto">
       <div className={`px-6 flex items-start justify-between py-4 ${props.show?'opacity-100':'opacity-0'} transition-all`}>
-        <p className='text-4xl font-bold text-neutral-300'>{props.rate.val}<span className='text-2xl'>{' '}{props.rate.currency}</span></p>
+        <p className='text-4xl font-bold text-neutral-300'>{props.rate.val > 1_000_000?props.rate.val.toExponential(3):props.rate.val}<span className='text-2xl'>{' '}{props.rate.currency}</span></p>
         <p className="text-neutral-300 text-xs">{props.date}</p>
       </div>
       {props.loading?
