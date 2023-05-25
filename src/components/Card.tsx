@@ -7,7 +7,7 @@ export default function Card() {
       </header>
       <CardBody />
       <footer>
-        <p className='text-neutral-200 pt-4 text-xs text-center'>Real-Time, Intraday & Historical Market</p>
+        <p className='text-neutral-200 pt-4 text-xs text-center'>Real-Time, Intraday Market</p>
       </footer>
     </article>
   )
