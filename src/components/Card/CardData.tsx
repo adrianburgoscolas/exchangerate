@@ -27,7 +27,7 @@ export default function CardData(props: CardData) {
             role='select' 
             onChange={props.handleFrom} 
             value={props.from} 
-            className="cursor-pointer border border-neutral-400 hover:bg-neutral-400 bg-neutral-300 rounded-md p-1 w-16"
+            className="cursor-pointer border border-neutral-400 hover:bg-neutral-400 bg-neutral-300 transition-all rounded-md p-1 w-16"
           >
             {props.symbols.map((obj: string, i: number) => <option key={i} value={obj}>{obj}</option>)}
           </select>
@@ -36,11 +36,11 @@ export default function CardData(props: CardData) {
             role='select' 
             onChange={props.handleTo} 
             value={props.to} 
-            className="cursor-pointer border border-neutral-400 hover:bg-neutral-400  bg-neutral-300 rounded-md p-1 w-16"
+            className="cursor-pointer border border-neutral-400 hover:bg-neutral-400  bg-neutral-300 transition-all rounded-md p-1 w-16"
           >
             {props.symbols.map((obj: string, i: number) => <option key={i} value={obj}>{obj}</option>)}
           </select> 
-          <input role='button' type="submit" className='hover:bg-neutral-400 text-neutral-600 rounded-md border border-neutral-400 p-1' value='Calc' />
+          <input role='button' type="submit" className='hover:bg-neutral-400 transition-all text-neutral-600 rounded-md border border-neutral-400 p-1' value='Calc' />
         </form>
       }
     </div>
